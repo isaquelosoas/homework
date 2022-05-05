@@ -52,7 +52,7 @@ export class UserHasTaskRepository {
         where: { id: taskId },
         include: {
           user: true,
-          approver: true,
+          Approver: true,
           task: { include: { Category: true } },
         },
       })
