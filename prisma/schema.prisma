@@ -1,0 +1,78 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String            @id @default(auto()) @map("_id") @db.ObjectId
+  email       String            @unique()
+  password    String
+  name        String
+  isAdmin     Boolean           @default(false)
+  isApprover  Boolean           @default(false)
+  userBalance Float             @default(0)
+  approverId  String?           @db.ObjectId
+  Approvers   UserHasApprover[]
+  UserHasTask UserHasTask[]
+  Approver    Approver?
+}
+
+model UserHasApprover {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  approver   Approver @relation(fields: [approverId], references: [id])
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String   @db.ObjectId
+  approverId String   @db.ObjectId
+}
+
+model Approver {
+  id         String            @id @default(auto()) @map("_id") @db.ObjectId
+  user       User              @relation(fields: [userId], references: [id])
+  userId     String            @unique() @map("userId")
+  Dependents UserHasApprover[]
+  Approvals  UserHasTask[]
+}
+
+model Task {
+  id          String        @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  description String
+  meanTime    Float         @default(0)
+  Category    Category?     @relation(fields: [categoryId], references: [id])
+  categoryId  String?       @db.ObjectId
+  UserHasTask UserHasTask[]
+}
+
+model UserHasTask {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  task        Task?     @relation(fields: [taskId], references: [id])
+  user        User?     @relation(fields: [userId], references: [id])
+  userId      String?   @db.ObjectId
+  taskId      String?   @db.ObjectId
+  startTime   String
+  endTime     String
+  timeSpent   Float
+  sharerId    String?   @db.ObjectId
+  shareAmount Float     @default(0)
+  taskValue   Float     @default(0)
+  pending     Boolean   @default(false)
+  approved    Boolean   @default(false)
+  comment     String?
+  approverId  String?   @db.ObjectId
+  Approver    Approver? @relation(fields: [approverId], references: [id])
+}
+
+model Category {
+  id            String  @id @default(auto()) @map("_id") @db.ObjectId
+  needsApproval Boolean @default(false)
+  name          String
+  color         String
+  tasks         Task[]
+}
