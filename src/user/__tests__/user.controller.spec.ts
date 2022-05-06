@@ -68,13 +68,6 @@ describe('UserController', () => {
     expect(result).toEqual(UserMockData.userData);
   });
 
-  it('should not create user', async () => {
-    const result = await userController.createUser(
-      UserMockData.createUserRequest,
-    );
-    expect(result).toEqual(UserMockData.userData);
-  });
-
   it('should delete user', async () => {
     const result = await userController.deleteUser(UserMockData.userData.id);
     expect(result).toEqual(UserMockData.userData);
