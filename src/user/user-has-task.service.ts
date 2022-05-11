@@ -62,6 +62,8 @@ export class UserHasTaskService {
       console.log('Criando tarefa pendente');
       data.pending = true;
     } else {
+      data.pending = false;
+      data.approved = true;
       console.log('Atualizando saldo do usuário');
       updateBalance(userId, data.taskValue, sharerId, shareAmount);
     }

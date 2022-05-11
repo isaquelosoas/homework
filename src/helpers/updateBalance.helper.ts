@@ -13,6 +13,8 @@ export async function updateBalance(
       taskValue,
     );
 
+    console.log(userPercentage, sharerPercentage);
+
     const { userBalance } = await userManagementRepository.getUserById(userId);
     const { userBalance: sharerBalance } =
       await userManagementRepository.getUserById(sharerId);
@@ -32,9 +34,7 @@ export async function updateBalance(
 }
 
 function shareValue(shareAmount: number, taskValue: number): number[] {
-  if (shareAmount < 1) {
-    const userPercentage = 1 - shareAmount;
-    return [userPercentage * taskValue, shareAmount * taskValue];
-  }
-  return [taskValue - shareAmount, shareAmount];
+  console.log('Share amount ', shareAmount);
+  const userPercentage = 1 - shareAmount;
+  return [userPercentage * taskValue, shareAmount * taskValue];
 }
