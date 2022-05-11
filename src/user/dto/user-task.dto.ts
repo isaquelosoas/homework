@@ -1,9 +1,4 @@
-import {
-  IsDateString,
-  IsNotEmpty,
-  MaxLength,
-  MinLength,
-} from 'class-validator';
+import { IsDateString, IsNotEmpty, Max, Min } from 'class-validator';
 
 export class CreateUserTaskDto {
   userId: string;
@@ -16,8 +11,8 @@ export class CreateUserTaskDto {
   timeSpent: number;
   sharerId?: string;
   pending?: boolean;
-  @MaxLength(1)
-  @MinLength(0)
+  @Max(1)
+  @Min(0)
   shareAmount?: number;
   taskValue?: number;
   approved?: boolean;

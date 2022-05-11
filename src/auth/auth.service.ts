@@ -39,4 +39,17 @@ export class AuthService {
 
     return { token: JwtHelper.generateToken(userData) };
   }
+
+  async verifyUser(authorization: string): Promise<any> {
+    //verify bearer token
+    const [bearer, token] = authorization.split(' ');
+    if (bearer !== 'Bearer') {
+      throw new InvalidCredentialException();
+    }
+    const userData = JwtHelper.verifyToken(token);
+    if (!userData) {
+      throw new InvalidCredentialException();
+    }
+    return userData;
+  }
 }
