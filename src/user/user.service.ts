@@ -4,7 +4,6 @@ import { CreateUserDto } from './dto/createUser.dto';
 import { createUserData, findUserData } from './mappers/createUser.mapper';
 import { UserManagementRepository } from './repositories/userManagement.repository';
 import { PasswordHelper } from '../helpers/password.helper';
-import { CreateUserTaskDto } from './dto/user-task.dto';
 import { UserHasTaskRepository } from './repositories/user-has-task.repository';
 
 @Injectable()

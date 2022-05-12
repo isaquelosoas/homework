@@ -13,9 +13,17 @@ import { AdminMiddleware } from './middlewares/admin.middleware';
 import { AuthMiddleware } from './middlewares/auth.middleware';
 import { TaskModule } from './task/task.module';
 import { UserModule } from './user/user.module';
+import { WithdrawModule } from './withdraw/withdraw.module';
 
 @Module({
-  imports: [UserModule, AuthModule, ApproverModule, CategoryModule, TaskModule],
+  imports: [
+    UserModule,
+    AuthModule,
+    ApproverModule,
+    CategoryModule,
+    TaskModule,
+    WithdrawModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
