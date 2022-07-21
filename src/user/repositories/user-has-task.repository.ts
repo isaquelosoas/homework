@@ -18,6 +18,8 @@ export class UserHasTaskRepository {
 
   async getUserTasks(
     data: Prisma.UserHasTaskWhereInput,
+    skip?: number,
+    limit?: number,
   ): Promise<UserHasTask[]> {
     return prisma.userHasTask
       .findMany({
@@ -26,6 +28,8 @@ export class UserHasTaskRepository {
           task: { include: { Category: true } },
           user: { include: { Approvers: true } },
         },
+        skip,
+        take: limit,
       })
       .catch((err) => {
         throw new PrismaException('User task not found', err);
@@ -35,11 +39,15 @@ export class UserHasTaskRepository {
   async getUserTasksByUserId(
     userId: string,
     filter: Prisma.UserHasTaskWhereInput,
+    skip?: number,
+    take?: number,
   ): Promise<UserHasTask[]> {
     return prisma.userHasTask
       .findMany({
         where: { userId, ...filter },
         include: { task: { include: { Category: true } } },
+        skip,
+        take,
       })
       .catch((err) => {
         throw new PrismaException('User task not found by userid', err);

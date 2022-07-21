@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 import { Prisma, UserHasTask } from '@prisma/client';
 import { CreateUserDto } from './dto/createUser.dto';
@@ -61,9 +62,15 @@ export class UserController {
   @Get('/:userId/task')
   async getUserTasks(
     @Param('userId') userId: string,
+    @Query() { skip, limit },
     @Body() body: Prisma.UserHasTaskWhereInput = {},
   ): Promise<UserHasTask[]> {
-    return this.userHasTaskService.getUserTasksByUserId(userId, body);
+    return this.userHasTaskService.getUserTasksByUserId(
+      userId,
+      body,
+      skip,
+      limit,
+    );
   }
 
   @Get('/:userId/task/pendingApproval')

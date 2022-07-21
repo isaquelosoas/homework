@@ -79,8 +79,17 @@ export class UserHasTaskService {
   async getUserTasksByUserId(
     userId: string,
     filter: Prisma.UserHasTaskWhereInput = {},
+    step: string = '0',
+    limit: string = '30',
   ): Promise<UserHasTask[]> {
-    return this.userHasTaskRepository.getUserTasksByUserId(userId, filter);
+    const skip = parseInt(step);
+    const take = parseInt(limit);
+    return this.userHasTaskRepository.getUserTasksByUserId(
+      userId,
+      filter,
+      skip,
+      take,
+    );
   }
 
   async getUserTaskByTaskId(taskId: string): Promise<UserHasTask> {
