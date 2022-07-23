@@ -57,9 +57,11 @@ model Task {
   name        String
   description String
   meanTime    Float         @default(0)
+  multiplier  Float         @default(1)
   Category    Category?     @relation(fields: [categoryId], references: [id])
   categoryId  String?       @db.ObjectId
   UserHasTask UserHasTask[]
+
 }
 
 model UserHasTask {

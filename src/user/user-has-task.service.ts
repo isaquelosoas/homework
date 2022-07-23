@@ -26,9 +26,10 @@ export class UserHasTaskService {
 
     //Pega o tempo médio da tarefa
     console.log('Pegando tempo médio da tarefa');
-    const [{ meanTime, categoryId }] = await this.taskRepository.getTasks({
-      id: taskId,
-    });
+    const [{ meanTime, categoryId, multiplier = 1 }] =
+      await this.taskRepository.getTasks({
+        id: taskId,
+      });
     console.log('Tempo Médio da Tarefa ', meanTime);
 
     // Calcula o valor da tarefa de acordo com o tempo gasto e o tempo médio e seta no data.taskValue
@@ -37,7 +38,7 @@ export class UserHasTaskService {
       meanTime,
       data.timeSpent,
     );
-    data.taskValue = taskValue;
+    data.taskValue = taskValue * multiplier;
     console.log('Valor da Tarefa ', taskValue);
 
     // Atualiza o tempo médio da tarefa

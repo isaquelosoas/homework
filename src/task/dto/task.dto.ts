@@ -9,4 +9,7 @@ export class CreateTaskDto {
 
   @IsNotEmpty()
   categoryId: string;
+
+  @IsNotEmpty()
+  multiplier: number;
 }
