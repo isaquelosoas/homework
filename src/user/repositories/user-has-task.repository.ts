@@ -48,6 +48,9 @@ export class UserHasTaskRepository {
         include: { task: { include: { Category: true } } },
         skip,
         take,
+        orderBy: {
+          startTime: 'desc',
+        },
       })
       .catch((err) => {
         throw new PrismaException('User task not found by userid', err);
